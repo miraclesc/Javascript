@@ -1,5 +1,5 @@
 <!DOCTYPE  HTML>
-<html>
+<html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>实时时间</title>
@@ -31,6 +31,10 @@
   }
  attime=setInterval(clock,1000)
 </script>
+<style type="text/css">
+	*{font:16px/2em "microsoft";}
+	#clock{border: none;}
+</style>
 </head>
 <body>
 <form>
