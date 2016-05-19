@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>move</title>
+</head>
+<body>
+<div style="position: absolute;width: 250px;background-color: white;border: 1px solid black;">
+	<div style="background: gray;border-bottom:1px dotted black;padding: 3px;font-family: sans-serif;font-weight: bold;" onmousedown="drag(this.parentNode,event);">
+	拖动我
+	</div>
+	<p>这是一个测试</p><p>测试</p><p>测试</p>
+</div>
+	<script type="text/javascript">
+		function drag(elementToDrag,event) {
+			var startX = event.clientX;
+			var startY = event.clientY;
+			var origX = elementToDrag.offsetLeft;
+			var origY = elementToDrag.offsetTop;
+			var deltaX = startX - origX;
+			var deltaY = startY - origY;
+			document.addEventListener("mousemove",moveHandler,true);
+			document.addEventListener("mouseup",upHandler,true)
+			event.stopPropagation();
+			event.preventDefault();
+			function moveHandler(e){
+				elementToDrag.style.left = (e.clientX - deltaX) + "px";
+				elementToDrag.style.top = (e.clientY - deltaY) + "px";
+				e.stopPropagation();
+			}
+			function upHandler(e){
+				document.removeEventListener("mouseup",upHandler,true);
+				document.removeEventListener("mousemove",moveHandler,true);
+				e.stopPropagation();
+			}
+		}
+
+	</script>
+</body>
+</html>
