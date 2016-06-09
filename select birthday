@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生日选择器</title>
+</head>
+<body>
+    <form class="birthday" name="dayForm" method="post" accept="/">
+        <select name="year" id="year">
+            <option value="0">--</option>
+        </select>年
+        <select name="month" id="month">
+            <option value="0">--</option>
+        </select>月
+        <select name="date" id="date">
+            <option value="0">--</option>
+        </select>日
+    </form>
+    <script type="text/javascript">
+    //事件处理兼容
+    function addEvent(node,event,handler){
+        if (node.addEventListener){
+            node.addEventListener(event,handler,false);
+        }else{
+            node.attachEvent('on'+event,handler);
+        }
+    }
+    //获取节点
+    var year = document.getElementById('year');
+    var month = document.getElementById('month');
+    var date = document.getElementById('date');
+    //插入节点函数
+    function create(node,x,y){
+        for(var i = x; i < y; i++){
+            var option = document.createElement('option');
+            option.appendChild(document.createTextNode(i));
+            option.setAttribute('value', i);
+            node.appendChild(option);
+        }
+    }
+    //添加年份
+    create(year,1970,2017)
+    //改变年份事件
+    addEvent(year,'change',function(event){
+        for(var i = 12; i > 0; i--){
+            month.remove(i);
+        }
+        //日期最多为31天，当年份无值时，删除日期选项
+        for(var i = 31; i > 0; i--){
+            date.remove(i);
+        }
+        //当月份为有效值，添加12个月份
+        if (year.value != 0) create(month,1,13);
+    });
+    //根据所选年份和月份确定天数的值
+    function dayNumber(){
+        if ( year.value !== 0){
+            var yearSelect = year.value; 
+        }
+        if (month.value !== 0) {
+            var monthSelect = month.value;
+        }
+        var dayNum = new Date(yearSelect, monthSelect, 0);
+        var num = dayNum.getDate();
+        return num;
+    }
+    //改变月份事件
+    addEvent(month, 'change', function(event){
+        for(var i = 31; i > 0; i--){
+            date.remove(i);
+        }
+        //当月份为有效值时，根据月份的选择，添加相应的天数
+        if(month.value != 0){
+            var num = dayNumber()+1;
+           create(date,1,num);
+        }
+    })
+    </script>
+</body>
+</html>
